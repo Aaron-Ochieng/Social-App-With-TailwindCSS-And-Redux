@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "679366680028",
+    "project_id": "android-bims",
+    "storage_bucket": "android-bims.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679366680028:android:d018497a5e9624407d4319",
+        "android_client_info": {
+          "package_name": "com.bims"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679366680028-dd67g3d1297jjuavt5pt26psr2gn80uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9Zwr6lkYJp5DKvJEfczBl50t0rMnY1J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679366680028-dd67g3d1297jjuavt5pt26psr2gn80uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
