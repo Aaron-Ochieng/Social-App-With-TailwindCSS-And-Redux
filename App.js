@@ -1,14 +1,14 @@
 import React from "react";
-import { AppStack } from "./routes";
-import AuthRoutes from "./routes/AuthRoutes";
+import { Provider } from "react-redux";
+import { Routing } from "./routes";
 import { store } from "./utils/redux/store";
-import { AuthContext } from "./routes/AuthProvider";
+
 
 
 export default function App() {
     return (
-        <AuthContext>
-            <AppStack />
-        </AuthContext>
+        <Provider store={store}>
+            <Routing />
+        </Provider>
     )
 }

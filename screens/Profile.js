@@ -2,8 +2,12 @@ import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'r
 import React from 'react'
 import { Posts } from '../components'
 import { PostsData } from '../utils/data'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../utils/redux/userSlice'
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+    const user = useSelector(selectUser);
+    console.log(user)
     return (
         <SafeAreaView className="flex-1 bg-white">
             <ScrollView
@@ -12,9 +16,10 @@ const Profile = () => {
                 showsVerticalScrollIndicator={false}
             >
                 <Image source={require('../static/users/user-1.jpg')} className='h-[100px] w-[100px] rounded-full' />
-                <Text className='mt-5 mb-5 text-black font-semibold text-xl'>Aaron Ochieng</Text>
+                <Text className='mt-5 mb-5 text-black font-semibold text-xl'>{user.email}</Text>
                 <Text className="text-[#1b1a1a] text-center mb-5 font-[600] text-sm">About the motherfuking user</Text>
 
+                { }
                 <View className="flex-row justify-center w-full mb-5 space-x-3">
                     <TouchableOpacity className="border-[#2e64e5] rounded h-9 w-20 items-center border">
                         <Text className="text-[#2e64e5] mt-1">Message</Text>

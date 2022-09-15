@@ -1,7 +1,4 @@
-import AuthRoutes from "./AuthRoutes";
-import AppStack from "./AppStack";
+import Routing from "./Routing";
 
-export {
-    AuthRoutes,
-    AppStack
-}
+
+export { Routing }

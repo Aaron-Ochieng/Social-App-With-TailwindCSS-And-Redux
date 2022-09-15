@@ -1,0 +1,19 @@
+{
+    "displayName": null,
+    "email": "ochiengaoron@gmail.com",
+    "emailVerified": false,
+    "isAnonymous": false,
+    "metadata": {
+        "creationTime": 1663074460237,
+        "lastSignInTime": 1663162770609
+    },
+    "phoneNumber": null,
+    "photoURL": null,
+    "providerData": [
+        [Object
+        ]
+    ],
+    "providerId": "firebase",
+    "tenantId": null,
+    "uid": "ZrDZgS2pNuPah0bROxUouN1bnc52"
+}

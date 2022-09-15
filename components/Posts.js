@@ -8,7 +8,7 @@ const Divider = () => {
     )
 }
 
-const Posts = ({ item }) => {
+const Posts = ({ item, handleNavigate }) => {
     let likedIcon = item.liked ? 'heart' : 'heart-outline'
 
 
@@ -34,12 +34,14 @@ const Posts = ({ item }) => {
 
 
     return (
-        <View className='bg-[#f8f8f8] w-full mb-[10px] br-[10px] rounded-lg'>
+        <View className='bg-[#f8f4f4] w-full mb-[10px] br-[10px] rounded-lg'>
             {/* <Text className='dark:text-black'>Hello</Text> */}
             <View className="flex flex-row justify-start p-[15px]">
                 <Image className="w-[50px] h-[50px] border-r-[25px] rounded-full" source={item.userImg} />
                 <View className="flex-col justify-center ml-3">
-                    <Text className="font-bold text-black ">{item.userName}</Text>
+                    <TouchableOpacity onPress={handleNavigate}>
+                        <Text className="font-bold text-black ">{item.userName}</Text>
+                    </TouchableOpacity>
                     <Text className="text-xs text-black">{item.postTime}</Text>
                 </View>
             </View>

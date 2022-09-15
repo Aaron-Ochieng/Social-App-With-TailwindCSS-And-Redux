@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { FormButton, SocialButton } from '../components';
 import FormInput from '../components/FormInput';
+import { AuthContext } from '../routes/AuthProvider';
 
 
 
@@ -21,12 +22,12 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
-  //   const {login, googleLogin, fbLogin} = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
 
   return (
     <ScrollView >
-      <View className='items-center justify-center p-4 bg-gray-300 h-screen dark:bg-slate-900'>
-        <Text className="text-[#051d5f] dark:text-gray-300 text-xl font-bold">Create new Account</Text>
+      <View className='items-center justify-center p-4 bg-gray-100 h-screen '>
+        <Text className="text-[#051d5f]  text-xl font-bold">Create new Account</Text>
         {/* <Text className="text-blue-900 text-lg">Login to your Account</Text> */}
 
         <FormInput
@@ -56,7 +57,7 @@ const Register = ({ navigation }) => {
 
         <FormButton
           buttonTitle="Sign Up"
-        // onPress={() => login(email, psword)}
+          onPress={() => register(email, password)}
         />
 
         <View className="flex-row items-center justify-between">

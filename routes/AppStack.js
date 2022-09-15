@@ -4,24 +4,27 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Chat, EditProfile, Home, Messages, NewPost, Profile } from '../screens';
 import IoniconIcon from 'react-native-vector-icons/Ionicons'
 import { Dimensions } from 'react-native';
-import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { AuthProvider } from './AuthProvider';
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const fullScreenWidth = Dimensions.get('screen').width;
 
-const FeedStack = ({ navigation }) => {
+const FeedStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name='home' component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name='newPost' component={NewPost} options={{ headerShown: false }} />
+            <Stack.Screen name='home' component={Home}
+                options={{ headerShown: false }} />
+            <Stack.Screen name='newPost'
+                component={NewPost} options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }
 
 
-const MessageStack = ({ navigation }) => {
+const MessageStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name='messages' component={Messages} options={{ headerShown: false }} />
@@ -36,7 +39,7 @@ const MessageStack = ({ navigation }) => {
 }
 
 
-const ProfileStack = ({ navigation }) => {
+const ProfileStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name='profile' component={Profile} options={{ headerShown: false }} />
@@ -46,10 +49,9 @@ const ProfileStack = ({ navigation }) => {
 }
 
 
-
-const AppStack = ({ navigation }) => {
+const AppStack = () => {
     return (
-        <NavigationContainer>
+        <AuthProvider>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size, padding }) => {
@@ -61,17 +63,20 @@ const AppStack = ({ navigation }) => {
                             iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
                         } else if (route.name == 'Profile') {
                             iconName = focused ? 'person' : 'person-outline'
+                        } else if (route.name == 'New Post') {
+                            iconName = focused ? 'add-circle' : 'add-circle-outline'
                         }
+
                         return <IoniconIcon name={iconName} size={size} color={color} style={{ paddingBottom: padding }} />
                     },
                     activeTintColor: 'aquamarine',
                     inactiveTintColor: 'grey',
                     labelStyle: { fontSize: 12 },
-                    tabBarStyle: { 
-                        width: fullScreenWidth, 
+                    tabBarStyle: {
+                        width: fullScreenWidth,
                         padding: 0,
-                        borderRadius:9
-                       
+                        borderRadius: 9
+
                     },
                     activeBackgroundColor: "#0f172a",
                     inactiveBackgroundColor: "#0f172a",
@@ -82,6 +87,9 @@ const AppStack = ({ navigation }) => {
 
             >
                 <Tab.Screen name='Home' component={FeedStack} options={{ headerShown: false }} />
+                <Tab.Screen name='New Post'
+                    component={NewPost}
+                    options={{ headerShown: false }} />
                 <Tab.Screen
                     name='Messages'
                     component={MessageStack}
@@ -106,8 +114,9 @@ const AppStack = ({ navigation }) => {
 
                     }}
                 />
+
             </Tab.Navigator>
-        </NavigationContainer>
+        </AuthProvider>
     )
 }
 
