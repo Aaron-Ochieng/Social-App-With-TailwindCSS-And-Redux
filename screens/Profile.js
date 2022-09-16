@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
             >
                 <Image source={require('../static/users/user-1.jpg')} className='h-[100px] w-[100px] rounded-full' />
-                <Text className='mt-5 mb-5 text-black font-semibold text-xl'>{user.email}</Text>
+                <Text className='mt-5 mb-5 text-black font-semibold text-xl'>{user.username}</Text>
                 <Text className="text-[#1b1a1a] text-center mb-5 font-[600] text-sm">About the motherfuking user</Text>
 
                 { }
@@ -26,6 +26,9 @@ const Profile = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity className="border-[#2e64e5] rounded h-9 w-20 items-center border">
                         <Text className="text-[#2e64e5] mt-1">Follow</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className="border-[#2e64e5] rounded h-9 w-20 items-center border" onPress={() => navigation.navigate('editProfile')}>
+                        <Text className="text-[#2e64e5] mt-1">edit</Text>
                     </TouchableOpacity>
                 </View>
 

@@ -21,12 +21,14 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await auth().signInWithEmailAndPassword(email, password);
+      // const response = await auth().signInWithEmailAndPassword(email, password);
       dispatch(login({
-        uid: response.user.uid,
-        email: response.user.email,
-        username: response.user.displayName,
-        phone: response.user.phoneNumber,
+        uid: 1234,
+        // response.user.uid,
+        // email: response.user.email,
+        username: 'Aaron Ochieng'
+        // response.user.displayName,
+        // phone: response.user.phoneNumber,
       }))
     } catch (error) {
       console.log(error)

@@ -17,11 +17,11 @@ const Home = () => {
     const navigation = useNavigation();
 
     const handleLogout = async () => {
-        try {
-            await auth().signOut()
-        } catch (e) {
-            console.log(e)
-        }
+        // try {
+        //     await auth().signOut()
+        // } catch (e) {
+        //     console.log(e)
+        // }
         dispatch(logout())
     }
 
