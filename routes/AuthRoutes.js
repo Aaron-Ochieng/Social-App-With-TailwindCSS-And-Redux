@@ -1,7 +1,6 @@
 import React from 'react'
 import { Bording, Login, Register } from '../screens';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthProvider } from './AuthProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -27,7 +26,6 @@ const AuthRoutes = () => {
     //     return null;
     // } else if (firstLaunch === true) {
     return (
-        <AuthProvider>
             <Stack.Navigator>
                 <Stack.Screen name='onboarding' component={Bording} options={{ headerShown: false }} />
                 <Stack.Screen name='login' component={Login} options={{ headerShown: false }} />
@@ -48,7 +46,6 @@ const AuthRoutes = () => {
                     )}
                 />
             </Stack.Navigator>
-        </AuthProvider>
     )
     // } else {
     //     <Login />

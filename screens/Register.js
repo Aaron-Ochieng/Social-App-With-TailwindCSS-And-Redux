@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { FormButton, SocialButton } from '../components';
 import FormInput from '../components/FormInput';
-import { AuthContext } from '../routes/AuthProvider';
 
 
 
@@ -21,8 +20,6 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-
-  const { register } = useContext(AuthContext);
 
   return (
     <ScrollView >

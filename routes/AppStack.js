@@ -5,7 +5,6 @@ import { Chat, EditProfile, Home, Messages, NewPost, Profile } from '../screens'
 import IoniconIcon from 'react-native-vector-icons/Ionicons'
 import { Dimensions } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { AuthProvider } from './AuthProvider';
 
 
 const Stack = createNativeStackNavigator();
@@ -51,7 +50,6 @@ const ProfileStack = () => {
 
 const AppStack = () => {
     return (
-        <AuthProvider>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size, padding }) => {
@@ -116,7 +114,6 @@ const AppStack = () => {
                 />
 
             </Tab.Navigator>
-        </AuthProvider>
     )
 }
 

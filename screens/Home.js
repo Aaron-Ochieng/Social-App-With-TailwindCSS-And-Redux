@@ -5,14 +5,17 @@ import { PostsData } from '../utils/data'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, selectUser } from '../utils/redux/userSlice'
 import auth from '@react-native-firebase/auth'
+import { useNavigation } from '@react-navigation/native'
 
 
 
 
 
-const Home = ({ navigation }) => {
+const Home = () => {
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const navigation = useNavigation();
+
     const handleLogout = async () => {
         try {
             await auth().signOut()
@@ -21,6 +24,7 @@ const Home = ({ navigation }) => {
         }
         dispatch(logout())
     }
+
     return (
         <SafeAreaView>
             <View className="bg-gray-800 flex flex-1 p-[5px] h-screen  items-center justify-center">
@@ -30,7 +34,7 @@ const Home = ({ navigation }) => {
                     data={PostsData}
                     renderItem={({ item }) => <Posts
                         item={item}
-                        handleNavigate={(navigation.navigate('profile'))}
+                        // handleNavigate={(navigation.navigate('profile'))}
                     />}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={false}

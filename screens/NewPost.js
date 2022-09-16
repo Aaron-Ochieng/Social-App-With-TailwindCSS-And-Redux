@@ -1,15 +1,22 @@
-import { View, TextInput, Image, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, Image, TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react'
 import ImagePicker from 'react-native-image-crop-picker';
 import { FloatingAction } from 'react-native-floating-action';
+import firestore from '@react-native-firebase/firestore'
+import storage from '@react-native-firebase/storage'
+import { selectUser } from '../utils/redux/userSlice';
+import { useSelector } from 'react-redux';
+
 
 const NewPost = ({ navigation }) => {
     const [post, setPost] = React.useState(null);
     const [image, setImage] = React.useState(null);
     const [uploading, setUploading] = React.useState(false);
+    const [transferred, setTransferred] = React.useState(0);
 
-    console.log(post)
+
+    const user = useSelector(selectUser)
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
@@ -30,6 +37,7 @@ const NewPost = ({ navigation }) => {
         }).then((image) => {
             const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
             setImage(imageUri);
+            console.log(imageUri)
         });
     };
 
@@ -49,6 +57,90 @@ const NewPost = ({ navigation }) => {
         }
     ]
 
+    const handleSubmit = async () => {
+        const imageUrl = await uploadImage();
+        console.log('Image Url: ', imageUrl);
+        console.log('Post: ', post);
+
+        firestore()
+            .collection('posts')
+            .add({
+                author:{
+                    uid:user.uid,
+                    name:user.email
+                }, 
+                post: post,
+                postImg: imageUrl,
+                postTime: firestore.Timestamp.fromDate(new Date()),
+                likes: null,
+                comments: null,
+            })
+            .then(() => {
+                console.log('Post Added!');
+                Alert.alert(
+                    'Post published!',
+                    'Your post has been published Successfully!',
+                );
+                setPost(null);
+            })
+            .catch((error) => {
+                console.log('Something went wrong with added post to firestore.', error);
+            });
+    }
+
+    const uploadImage = async () => {
+        if (image == null) {
+            return null;
+        }
+        const uploadUri = image;
+        let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+        // Add timestamp to File Name
+        const extension = filename.split('.').pop();
+        const name = filename.split('.').slice(0, -1).join('.');
+        filename = name + Date.now() + '.' + extension;
+
+        setUploading(true);
+        setTransferred(0);
+
+        const storageRef = storage().ref(`photos/${filename}`);
+        const task = storageRef.putFile(uploadUri);
+
+        // Set transferred state
+        task.on('state_changed', (taskSnapshot) => {
+            console.log(
+                `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+            );
+
+            setTransferred(
+                Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+                100,
+            );
+        });
+
+        try {
+            await task;
+
+            const url = await storageRef.getDownloadURL();
+
+            setUploading(false);
+            setImage(null);
+
+            // Alert.alert(
+            //   'Image uploaded!',
+            //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+            // );
+            return url;
+
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+
+    };
+
+
+
 
     return (
         <View className="flex-1 items-center justify-center h-full">
@@ -64,22 +156,26 @@ const NewPost = ({ navigation }) => {
                     className='text-black'
                 />
 
-                {post || image ? (
+                {uploading ? (
+                    <View className='items-center justify-center'>
+                        <Text className='text-gray-700'>{transferred} % Completed!</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </View>
+                ) : (
                     <TouchableOpacity
-                        className="flex-row justify-center items-center w-[100px] h-10 bg-[#2e64e1] mb-1 rounded-xl"
-                        onPress={() => console.log('Submitted details sucessfully', navigation.navigate('Home'))}
+                        className="flex-row justify-center items-center w-[100px] h-10 bg-[#5180ee] mb-1 rounded-xl"
+                        onPress={handleSubmit}
                     >
                         <Text className='text-[18px]'>Submit</Text>
                     </TouchableOpacity>
-                ) : null}
+                )}
             </View>
             <FloatingAction
                 actions={actions}
                 onPressItem={name => {
                     if (name === 'bt_take_photo') {
                         takePhotoFromCamera()
-                    } else if (
-                        name === 'bt_choose_photo'
+                    } else if (name === 'bt_choose_photo'
                     ) {
                         choosePhotoFromLibrary()
                     }
