@@ -32,7 +32,7 @@ local.properties
 *.hprof
 
 android/google-services.json
-android/app/google-services.json
+utils/user.json
 
 # node.js
 #

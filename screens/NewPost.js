@@ -57,7 +57,7 @@ const NewPost = ({ navigation }) => {
         }
     ]
 
-    const handleSubmit = async () => {
+    const submitPost = async () => {
         const imageUrl = await uploadImage();
         console.log('Image Url: ', imageUrl);
         console.log('Post: ', post);
@@ -65,10 +65,7 @@ const NewPost = ({ navigation }) => {
         firestore()
             .collection('posts')
             .add({
-                author:{
-                    uid:user.uid,
-                    name:user.email
-                }, 
+                userId: user.uid,
                 post: post,
                 postImg: imageUrl,
                 postTime: firestore.Timestamp.fromDate(new Date()),
@@ -141,7 +138,6 @@ const NewPost = ({ navigation }) => {
 
 
 
-
     return (
         <View className="flex-1 items-center justify-center h-full">
             <View className="flex-1 bg-[#2e64e515] justify-center items-center w-full h-full ">
@@ -164,7 +160,7 @@ const NewPost = ({ navigation }) => {
                 ) : (
                     <TouchableOpacity
                         className="flex-row justify-center items-center w-[100px] h-10 bg-[#5180ee] mb-1 rounded-xl"
-                        onPress={handleSubmit}
+                        onPress={submitPost}
                     >
                         <Text className='text-[18px]'>Submit</Text>
                     </TouchableOpacity>
